@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MenuMins.h"
+#include "MenuArgs.h"
 
 namespace LA
 {
@@ -14,15 +15,16 @@ namespace LA
 		return { minutes / 60, minutes % 60 };
 	}
 
-	void MenuMins(std::stringstream& args)
+	void MenuMins(const Ref<MenuArgs>& args)
 	{
-		uint32_t input;
-		args >> input;
+		uint32_t input = args->NextOne<uint32_t>();
+		if (args->Check())
+			return;
 
 		auto [hours, minutes] = GetPlayTime(input);
 
-		std::cout << "-- Mins\n";
-		std::cout << "Total Minutes: " << input << "m\n";
-		std::cout << "Playtime: " << hours << ":" << minutes << "\n";
+		std::cout << FormatColor::FBCyan << "-- Mins" << BaseStyle << RNL;
+		std::cout << MENU_BG << "Total Minutes: " << MENU_FG << input << MENU_BG << 'm' << BaseStyle << RNL;
+		std::cout << MENU_BG << "Playtime: " << MENU_FG << hours << ':' << minutes << BaseStyle << RNL;
 	}
 }

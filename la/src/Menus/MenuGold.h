@@ -1,6 +1,9 @@
 #pragma once
 
+#include "MenuBase.h"
+
 namespace LA
 {
-	void MenuGold(std::stringstream& args);
+	class MenuArgs;
+	void MenuGold(const Ref<MenuArgs>& args);
 }

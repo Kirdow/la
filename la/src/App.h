@@ -2,6 +2,7 @@
 
 namespace LA
 {
+	class MenuArgs;
 	class MenuScene;
 	class App
 	{
@@ -14,9 +15,12 @@ namespace LA
 		void Init();
 		void Run();
 
+		Ref<MenuArgs> Next();
+
 		static App* Get();
 		static void Destroy();
 	private:
+
 		Ref<MenuScene> m_Scene;
 		bool m_Running;
 	};

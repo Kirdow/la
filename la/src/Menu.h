@@ -1,8 +1,10 @@
 #pragma once
 
+#include "MenuArgs.h"
+
 namespace LA
 {
-	typedef void(*MenuRenderFunc)(std::stringstream&);
+	typedef void(*MenuRenderFunc)(const Ref<MenuArgs>&);
 
 	struct MenuType
 	{

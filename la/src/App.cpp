@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "App.h"
 
-#include "StringUtils.h"
-
 #include "Menu.h"
 #include "Menus/Menus.h"
+#include "MenuArgs.h"
+#include "Format.h"
+
+#include "Flags.h"
 
 namespace LA
 {
-	static void ExitCallback(std::stringstream&);
+	static void ExitCallback(const Ref<MenuArgs>&);
 
 	void App::Init()
 	{
@@ -23,29 +25,30 @@ namespace LA
 
 	void App::Run()
 	{
+		bool _cls = !CheckFlag(LAFlags_NoCLS);
+
 		while (m_Running)
 		{
 			m_Scene->DrawMenu();
-			std::cout << "Input: ";
 
-			std::string menu;
-			std::cin >> menu;
+			std::cout << FormatColor::FBBlue << "Input: " << BaseStyle;
 
-			std::string input;
-			std::getline(std::cin, input);
+			auto args = Next();
 
-			std::stringstream args(Utils::TrimCopy(input));
+			if (_cls)
+				ClearScreen();
 
-			auto& menuitem = m_Scene->Get(menu);
+			auto& menuitem = m_Scene->Get(args->GetLabel());
 			if (menuitem && menuitem->Render)
 			{
-				std::cout << "\n";
+				if (!_cls)
+					std::cout << RNL;
 				menuitem->Render(args);
-				std::cout << "\n";
+				std::cout << RNL;
 			}
 			else
 			{
-				std::cout << "\nInvalid menu {" << menu << "}\n";
+				std::cout << MENU_BG << "Invalid menu {" << MENU_FG << args->GetLabel() << MENU_BG << '}' << BaseStyle << RNL;
 			}
 		}
 	}
@@ -55,7 +58,15 @@ namespace LA
 		m_Running = false;
 	}
 
-	static void ExitCallback(std::stringstream&)
+	Ref<MenuArgs> App::Next()
+	{
+		std::string menu = Utils::ReadOne<std::string>();
+		std::string input = Utils::ReadLine();
+
+		return MenuArgs::Create(menu, input);
+	}
+
+	static void ExitCallback(const Ref<MenuArgs>&)
 	{
 		App::Get()->Stop();
 	}

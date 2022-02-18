@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Utils/Base.h"
+#include "Format.h"
+
 namespace LA
 {
 	template<typename T>

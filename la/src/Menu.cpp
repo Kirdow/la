@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Menu.h"
+#include "Menus/MenuBase.h"
 
 namespace LA
 {
@@ -16,19 +17,19 @@ namespace LA
 
 	void MenuScene::DrawMenu() const
 	{
-		std::cout << "-- Menu Items\n";
+		std::cout << FormatColor::FBCyan << "-- Menu Items" << BaseStyle << RNL;
 		for (auto& [name, menu] : m_Menus)
 		{
 			if (menu->Render)
 			{
-				std::cout << menu->Title;
+				std::cout << MENU_FG << menu->Title;
 				if (!menu->Desc.empty())
-					std::cout << " | Usage: " << menu->Desc;
-				std::cout << "\n";
+					std::cout << MENU_BG << " | Usage: " << MENU_FG << menu->Desc;
+				std::cout << BaseStyle << RNL;
 			}
 			else
 			{
-				std::cout << menu->Title << " (invalid/disabled)\n";
+				std::cout << MENU_FG << menu->Title << MENU_BG << " (invalid/disabled)" << BaseStyle << RNL;
 			}
 		}
 	}
@@ -39,5 +40,10 @@ namespace LA
 			return nullptr;
 
 		return m_Menus.at(name);
+	}
+
+	Ref<MenuArgs> MenuArgs::Create(const std::string& label, const std::string& args)
+	{
+		return CreateRef<MenuArgs>(label, args);
 	}
 }
