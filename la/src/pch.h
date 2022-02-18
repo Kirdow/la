@@ -21,3 +21,5 @@
 #ifdef LA_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
+
+#include "Base.h"
