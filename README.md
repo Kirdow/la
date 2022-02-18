@@ -11,6 +11,11 @@ Sure, MIT License for a reason, you're free to do anything with it.
 Go ahead, I might not accept the pull request directly, so your best bet is to use your own fork in the meantime, but if it fits when I check the pull requests, I wouldn't hesitate merging.
 
 # How do I use it?
-Currency only supports Windows on x64, but after cloning, run ``.\scripts\Win-GenProjects.bat`` to generate a project for Visual Studio 2019. Then double click la.sln to open the project. Set mode to Dist and x64 and build. Then put the program in your user folder.
+Currently only supports Windows on x64, but after cloning, run ``.\scripts\Win-GenProjects.bat`` to generate a project for Visual Studio 2019. Then double click la.sln to open the project. Set mode to Dist and x64 and build. Then put the program in your user folder.
 Edit the bat file to configure for a different IDE.
+
+# Tools and Libraries used
+- Visual Studio 2019
+- Premake 5
+- C++17
 
