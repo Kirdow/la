@@ -35,7 +35,7 @@ namespace LA
 		if (m_Changed)
 			return false;
 
-		UIBase::DrawFormat("%s", UISTR("Not enough args!"));
+		UIBase::DrawFormat("%", "Not enough args!");
 		return true;
 	}
 }

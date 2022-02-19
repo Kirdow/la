@@ -23,7 +23,7 @@ namespace LA
 		uint32_t wholePer10 = GetGold<uint32_t>(marketValue, wholeRatio);
 
 		UIBase::DrawMenuTitle("-- Gold");
-		UIBase::DrawFormat("%s = %d%c (%d%c @ whole units)", UISTR("10 EUR"), per10, 'g', wholePer10, 'g');
-		UIBase::DrawFormat("Market Value: %d%c", marketValue, 'g');
+		UIBase::DrawFormat("% = %% (%% @ whole units)", "10 EUR", per10, 'g', wholePer10, 'g');
+		UIBase::DrawFormat("Market Value: %%", marketValue, 'g');
 	}
 }

@@ -25,7 +25,7 @@ namespace LA
 		auto [hours, minutes] = GetPlayTime(input);
 
 		UIBase::DrawMenuTitle("-- Mins");
-		UIBase::DrawFormat("Total Minutes: %dm");
-		UIBase::DrawFormat("PlayTime %d%c%d", hours, ':', minutes);
+		UIBase::DrawFormat("Total Minutes: %m", input);
+		UIBase::DrawFormat("PlayTime %%%", hours, ':', minutes);
 	}
 }

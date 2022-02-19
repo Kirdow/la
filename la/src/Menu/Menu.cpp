@@ -23,14 +23,14 @@ namespace LA
 		{
 			if (menu->Render)
 			{
-				UIBase::DrawFormat(true, "%s", menu->Title);
+				UIBase::DrawFormat(true, "%", menu->Title);
 				if (!menu->Desc.empty())
-					UIBase::DrawFormat(true, " | Usage: %s", menu->Desc);
+					UIBase::DrawFormat(true, " | Usage: %", menu->Desc);
 				UIBase::DrawLine();
 			}
 			else
 			{
-				UIBase::DrawFormat("%s (invalid/disabled)", menu->Title);
+				UIBase::DrawFormat("% (invalid/disabled)", menu->Title);
 			}
 		}
 	}

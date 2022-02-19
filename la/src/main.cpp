@@ -22,6 +22,8 @@ int main(int argc, char** argv)
 
 	LA::App::Destroy();
 
+	std::cout << BaseStyle;
+
 	std::cout << "\nGoodbye!\n";
 
 	return 0;
