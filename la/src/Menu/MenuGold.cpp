@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "MenuGold.h"
-#include "MenuArgs.h"
+#include "Menu/MenuGold.h"
+#include "Menu/MenuArgs.h"
 #include "UI/UIBase.h"
 
 namespace LA

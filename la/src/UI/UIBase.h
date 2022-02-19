@@ -19,11 +19,15 @@ namespace LA
 
 	public:
 		static void DrawMenuTitle(const std::string& titleName);
-		static void DrawFormat(const char* fmt...);
+		static void DrawFormat(bool skipNewLine, const char* fmt, ...);
+		static void DrawFormat(const char* fmt, ...);
+
 		static void DrawLine(bool skip = false);
 		static void DrawInput();
 
 		static void SetColor(Variable var, FormatColor color);
 		static FormatColor GetColor(Variable var);
+	private:
+		static void DrawFormatImpl(bool skipNewLine, const char* fmt, va_list args);
 	};
 }

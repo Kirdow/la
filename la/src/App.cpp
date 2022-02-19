@@ -1,13 +1,11 @@
 #include "pch.h"
 #include "App.h"
 
-#include "Menu.h"
-#include "Menus/Menus.h"
-#include "MenuArgs.h"
-#include "Format.h"
+#include "Menu/MenuBase.h"
+#include "UI/Format.h"
+#include "UI/UIBase.h"
 
 #include "Flags.h"
-#include "UI/UIBase.h"
 
 namespace LA
 {

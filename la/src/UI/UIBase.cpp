@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "UIBase.h"
-#include "Format.h"
-#include "Menus/MenuBase.h"
+#include "UI/UIBase.h"
+#include "UI/Format.h"
 
 namespace LA
 {
@@ -28,14 +27,31 @@ namespace LA
 		std::cout << s_Data.C_Title << titleName << BaseStyle << RNL;
 	}
 
-	void UIBase::DrawFormat(const char* fmt...)
+	void UIBase::DrawFormat(bool skipNewLine, const char* fmt, ...)
 	{
 		va_list args;
 		va_start(args, fmt);
 
+		DrawFormatImpl(skipNewLine, fmt, args);
+
+		va_end(args);
+	}
+
+	void UIBase::DrawFormat(const char* fmt, ...)
+	{
+		va_list args;
+		va_start(args, fmt);
+
+		DrawFormatImpl(false, fmt, args);
+
+		va_end(args);
+	}
+
+	void UIBase::DrawFormatImpl(bool skipNewLine, const char* fmt, va_list args)
+	{
 		std::stringstream sstr;
 
-		sstr << MENU_BG;
+		sstr << s_Data.C_Background;
 
 		while (*fmt != '\0')
 		{
@@ -79,10 +95,10 @@ namespace LA
 			++fmt;
 		}
 
-		std::cout << sstr.str() << RNL;
-		
+		std::cout << sstr.str() << s_Data.C_Background;
 
-		va_end(args);
+		if (!skipNewLine)
+			std::cout << RNL;
 	}
 
 	void UIBase::DrawLine(bool skip)
@@ -90,7 +106,7 @@ namespace LA
 		if (skip)
 			return;
 
-		std::cout << RNL;
+		std::cout << s_Data.C_Background << RNL;
 	}
 
 	void UIBase::DrawInput()

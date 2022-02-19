@@ -1,5 +1,8 @@
 #pragma once
 
+#define BaseStyle ::LA::FormatColor::Default
+#define RNL '\n'
+
 namespace LA
 {
 	enum class FormatColor
@@ -47,10 +50,6 @@ namespace LA
 		BBCyan,
 		BBWhite
 	};
-
-#define BaseStyle ::LA::FormatColor::Default
-#define RNL '\n'
-
 
 	void ClearScreen();
 	void ResetStyle();

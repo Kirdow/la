@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MenuArgs.h"
+#include "Menu/MenuArgs.h"
 
 namespace LA
 {

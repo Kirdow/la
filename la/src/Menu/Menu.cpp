@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Menu.h"
-#include "Menus/MenuBase.h"
+#include "Menu/Menu.h"
+#include "Menu/MenuBase.h"
+#include "UI/UIBase.h"
 
 namespace LA
 {
@@ -17,19 +18,19 @@ namespace LA
 
 	void MenuScene::DrawMenu() const
 	{
-		std::cout << FormatColor::FBCyan << "-- Menu Items" << BaseStyle << RNL;
+		UIBase::DrawMenuTitle("-- Menu Items");
 		for (auto& [name, menu] : m_Menus)
 		{
 			if (menu->Render)
 			{
-				std::cout << MENU_FG << menu->Title;
+				UIBase::DrawFormat(true, "%s", menu->Title);
 				if (!menu->Desc.empty())
-					std::cout << MENU_BG << " | Usage: " << MENU_FG << menu->Desc;
-				std::cout << BaseStyle << RNL;
+					UIBase::DrawFormat(true, " | Usage: %s", menu->Desc);
+				UIBase::DrawLine();
 			}
 			else
 			{
-				std::cout << MENU_FG << menu->Title << MENU_BG << " (invalid/disabled)" << BaseStyle << RNL;
+				UIBase::DrawFormat("%s (invalid/disabled)", menu->Title);
 			}
 		}
 	}
