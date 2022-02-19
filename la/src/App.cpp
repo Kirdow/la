@@ -7,6 +7,7 @@
 #include "Format.h"
 
 #include "Flags.h"
+#include "UI/UIBase.h"
 
 namespace LA
 {
@@ -21,6 +22,11 @@ namespace LA
 		m_Scene->CreateMenu("mins", "mins <minutes:i>", MenuMins);
 
 		m_Scene->CreateMenu("exit", "", ExitCallback);
+
+		UIBase::SetColor(UIBase::Variable::Title, FormatColor::FBCyan);
+		UIBase::SetColor(UIBase::Variable::Input, FormatColor::FBBlue);
+		UIBase::SetColor(UIBase::Variable::Foreground, FormatColor::FDWhite);
+		UIBase::SetColor(UIBase::Variable::Background, FormatColor::FBBlack);
 	}
 
 	void App::Run()
@@ -31,7 +37,7 @@ namespace LA
 		{
 			m_Scene->DrawMenu();
 
-			std::cout << FormatColor::FBBlue << "Input: " << BaseStyle;
+			UIBase::DrawInput();
 
 			auto args = Next();
 
@@ -41,14 +47,13 @@ namespace LA
 			auto& menuitem = m_Scene->Get(args->GetLabel());
 			if (menuitem && menuitem->Render)
 			{
-				if (!_cls)
-					std::cout << RNL;
+				UIBase::DrawLine(_cls);
 				menuitem->Render(args);
-				std::cout << RNL;
+				UIBase::DrawLine();
 			}
 			else
 			{
-				std::cout << MENU_BG << "Invalid menu {" << MENU_FG << args->GetLabel() << MENU_BG << '}' << BaseStyle << RNL;
+				UIBase::DrawFormat("Invalid menu {%s}", args->GetLabel());
 			}
 		}
 	}

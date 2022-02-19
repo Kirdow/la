@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MenuMins.h"
 #include "MenuArgs.h"
+#include "UI/UIBase.h"
 
 namespace LA
 {
@@ -23,8 +24,8 @@ namespace LA
 
 		auto [hours, minutes] = GetPlayTime(input);
 
-		std::cout << FormatColor::FBCyan << "-- Mins" << BaseStyle << RNL;
-		std::cout << MENU_BG << "Total Minutes: " << MENU_FG << input << MENU_BG << 'm' << BaseStyle << RNL;
-		std::cout << MENU_BG << "Playtime: " << MENU_FG << hours << ':' << minutes << BaseStyle << RNL;
+		UIBase::DrawMenuTitle("-- Mins");
+		UIBase::DrawFormat("Total Minutes: %dm");
+		UIBase::DrawFormat("PlayTime %d%c%d", hours, ':', minutes);
 	}
 }

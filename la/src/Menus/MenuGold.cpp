@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MenuGold.h"
 #include "MenuArgs.h"
+#include "UI/UIBase.h"
 
 namespace LA
 {
@@ -21,9 +22,8 @@ namespace LA
 		uint32_t per10 = GetGold<uint32_t>(marketValue, ratio);
 		uint32_t wholePer10 = GetGold<uint32_t>(marketValue, wholeRatio);
 
-		std::cout << FormatColor::FBCyan << "-- Gold" << BaseStyle << RNL;
-		std::cout << MENU_FG << "10 EUR" << MENU_BG << " = " << MENU_FG << per10 << 'g'
-			<< MENU_BG << " (" << MENU_FG << wholePer10 << 'g' << MENU_BG << " @ whole units)" << BaseStyle << RNL;
-		std::cout << MENU_BG << "Market Value: " << MENU_FG << marketValue << 'g' << BaseStyle << RNL;
+		UIBase::DrawMenuTitle("-- Gold");
+		UIBase::DrawFormat("%s = %d%c (%d%c @ whole units)", UISTR("10 EUR"), per10, 'g', wholePer10, 'g');
+		UIBase::DrawFormat("Market Value: %d%c", marketValue, 'g');
 	}
 }

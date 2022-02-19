@@ -5,10 +5,8 @@ namespace LA
 	class MenuArgs
 	{
 	public:
-		MenuArgs(const std::string& label, const std::string& args)
-			: m_Label(label), m_RawArgs(args), m_Args(args) {}
-		MenuArgs(const MenuArgs& other)
-			: m_Label(other.m_Label), m_RawArgs(other.m_RawArgs), m_Args(other.m_RawArgs) {}
+		MenuArgs(const std::string& label, const std::string& args);
+		MenuArgs(const MenuArgs& other);
 		virtual ~MenuArgs() = default;
 
 		inline std::string GetLabel() const { return m_Label; }
@@ -23,34 +21,11 @@ namespace LA
 			return result;
 		}
 
-		const std::string& FullLine() const
-		{
-			return m_RawArgs;
-		}
-
-		std::string NextLine()
-		{
-			return Utils::ReadLine(m_Args);
-		}
-
-		bool Empty() const
-		{
-			return m_RawArgs.empty();
-		}
-
-		bool Done() const
-		{
-			return !m_Changed;
-		}
-
-		bool Check() const
-		{
-			if (m_Changed)
-				return false;
-
-			std::cout << "Not enough args!\n";
-			return true;
-		}
+		const std::string& FullLine() const;
+		std::string NextLine();
+		bool Empty() const;
+		bool Done() const;
+		bool Check() const;
 
 		static Ref<MenuArgs> Create(const std::string& label, const std::string& args);
 
