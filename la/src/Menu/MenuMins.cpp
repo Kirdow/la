@@ -16,7 +16,7 @@ namespace LA
 		return { minutes / 60, minutes % 60 };
 	}
 
-	void MenuMins(const Ref<MenuArgs>& args)
+	void MenuMins::Render(const Ref<MenuArgs>& args)
 	{
 		uint32_t input = args->NextOne<uint32_t>();
 		if (args->Check())

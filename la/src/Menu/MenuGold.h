@@ -1,9 +1,15 @@
 #pragma once
 
-#include "Menu/MenuBase.h"
+#include "Menu/Menu.h"
 
 namespace LA
 {
-	class MenuArgs;
-	void MenuGold(const Ref<MenuArgs>& args);
+	class MenuGold : public Menu
+	{
+	public:
+		MenuGold()
+			: Menu("gold", "gold <amount:i>") {}
+
+		virtual void Render(const Ref<MenuArgs>& args) override;
+	};
 }

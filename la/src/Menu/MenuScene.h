@@ -1,35 +1,25 @@
 #pragma once
 
 #include "Menu/MenuArgs.h"
+#include "Menu/Menu.h"
 
 namespace LA
 {
 	typedef void(*MenuRenderFunc)(const Ref<MenuArgs>&);
-
-	struct MenuType
-	{
-		std::string Title;
-		std::string Desc;
-		MenuRenderFunc Render;
-
-		MenuType()
-			: Title(""), Desc(""), Render(nullptr) {}
-		MenuType(const std::string& title, const std::string& desc, MenuRenderFunc render)
-			: Title(title), Desc(desc), Render(render) {}
-		MenuType(const MenuType& other)
-			: Title(other.Title), Desc(other.Desc), Render(other.Render) {}
-	};
 
 	class MenuScene
 	{
 	public:
 		MenuScene() = default;
 
-		bool CreateMenu(const std::string& title, const std::string& desc, MenuRenderFunc render);
 		void DrawMenu() const;
+		void RegisterMenu(MenuType type);
+		void RegisterMenu(const std::string& title, const std::string& desc, MenuRenderFunc);
 
-		const Ref<MenuType>& Get(const std::string& name) const;
+		const Ref<Menu>& Get(MenuType type) const;
+		const Ref<Menu>& Get(const std::string& name) const;
 	private:
-		std::unordered_map<std::string, Ref<MenuType>> m_Menus;
+		std::unordered_map<MenuType, std::string> m_MenuNames;
+		std::unordered_map<std::string, Ref<Menu>> m_Menus;
 	};
 }

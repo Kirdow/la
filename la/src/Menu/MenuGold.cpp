@@ -11,7 +11,8 @@ namespace LA
 		return static_cast<T>(static_cast<double>(market) * ratio);
 	}
 
-	void MenuGold(const Ref<MenuArgs>& args)
+
+	void MenuGold::Render(const Ref<MenuArgs>& args)
 	{
 		uint32_t marketValue = args->NextOne<uint32_t>();
 		if (args->Check())

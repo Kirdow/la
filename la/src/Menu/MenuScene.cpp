@@ -1,46 +1,99 @@
 #include "pch.h"
 #include "Menu/MenuScene.h"
-#include "Menu/MenuBase.h"
+#include "Menu/Menu.h"
 #include "UI/UIBase.h"
 
 namespace LA
 {
-	bool MenuScene::CreateMenu(const std::string& title, const std::string& desc, MenuRenderFunc render)
+	class AnonymousMenu : public Menu
 	{
-		if (m_Menus.find(title) != m_Menus.end())
-			return false;
+	public:
+		AnonymousMenu(const std::string& title, const std::string& desc, MenuRenderFunc render)
+			: Menu(title, desc), m_RenderFunc(render)
+		{}
 
-		Ref<MenuType> ref = CreateRef<MenuType>(title, desc, render);
-		m_Menus[title] = ref;
+		virtual void Render(const Ref<MenuArgs>& args) override
+		{
+			if (m_RenderFunc)
+				m_RenderFunc(args);
+		}
 
-		return true;
+		virtual bool Enabled() const override
+		{
+			return m_RenderFunc;
+		}
+
+	private:
+		MenuRenderFunc m_RenderFunc;
+	};
+
+	static void DrawMenuEntry(const Ref<Menu>& menu)
+	{
+		if (menu->Enabled())
+		{
+			UIBase::DrawFormat(true, "%", menu->GetTitle());
+			if (menu->HasDesc())
+				UIBase::DrawFormat(true, " | Usage: %", menu->GetDesc());
+			UIBase::DrawLine();
+		}
+		else
+		{
+			UIBase::DrawFormat("% (disabled/invalid)", menu->GetTitle());
+		}
 	}
 
 	void MenuScene::DrawMenu() const
 	{
+		Ref<Menu> exitEntry = nullptr;
 		UIBase::DrawMenuTitle("-- Menu Items");
 		for (auto& [name, menu] : m_Menus)
 		{
-			if (menu->Render)
+			if (name == "exit")
 			{
-				UIBase::DrawFormat(true, "%", menu->Title);
-				if (!menu->Desc.empty())
-					UIBase::DrawFormat(true, " | Usage: %", menu->Desc);
-				UIBase::DrawLine();
+				exitEntry = menu;
+				continue;
 			}
-			else
-			{
-				UIBase::DrawFormat("% (invalid/disabled)", menu->Title);
-			}
+
+			DrawMenuEntry(menu);
 		}
+		
+		if (exitEntry)
+			DrawMenuEntry(exitEntry);
 	}
 
-	const Ref<MenuType>& MenuScene::Get(const std::string& name) const
+	void MenuScene::RegisterMenu(MenuType type)
+	{
+		auto ref = Menu::CreateMenu(type);
+
+		auto& title = ref->GetTitle();
+		m_Menus[title] = ref;
+		m_MenuNames[type] = title;
+	}
+
+	void MenuScene::RegisterMenu(const std::string& title, const std::string& desc, MenuRenderFunc render)
+	{
+		if (m_Menus.find(title) != m_Menus.end())
+			return;
+
+		Ref<Menu> ref = CreateRef<AnonymousMenu>(title, desc, render);
+		m_Menus[title] = ref;
+	}
+
+	const Ref<Menu>& MenuScene::Get(const std::string& name) const
 	{
 		if (m_Menus.find(name) == m_Menus.end())
 			return nullptr;
 
 		return m_Menus.at(name);
+	}
+
+	const Ref<Menu>& MenuScene::Get(MenuType type) const
+	{
+		if (m_MenuNames.find(type) == m_MenuNames.end())
+			return nullptr;
+
+		auto name = m_MenuNames.at(type);
+		return Get(name);
 	}
 
 	Ref<MenuArgs> MenuArgs::Create(const std::string& label, const std::string& args)

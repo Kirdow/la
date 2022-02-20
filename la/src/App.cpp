@@ -16,10 +16,9 @@ namespace LA
 		m_Running = true;
 		m_Scene = CreateRef<MenuScene>();
 
-		m_Scene->CreateMenu("gold", "gold <amount:i>", MenuGold);
-		m_Scene->CreateMenu("mins", "mins <minutes:i>", MenuMins);
-
-		m_Scene->CreateMenu("exit", "", ExitCallback);
+		m_Scene->RegisterMenu(MenuType::Gold);
+		m_Scene->RegisterMenu(MenuType::Mins);
+		m_Scene->RegisterMenu("exit", "", ExitCallback);
 
 		UIBase::SetColor(UIBase::Variable::Title, FormatColor::FBCyan);
 		UIBase::SetColor(UIBase::Variable::Input, FormatColor::FBBlue);
@@ -43,7 +42,7 @@ namespace LA
 				ClearScreen();
 
 			auto& menuitem = m_Scene->Get(args->GetLabel());
-			if (menuitem && menuitem->Render)
+			if (menuitem)
 			{
 				UIBase::DrawLine(_cls);
 				menuitem->Render(args);
